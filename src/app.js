@@ -1,4 +1,3 @@
-
 /**
  * @module Application
  * @description The entry point, responsible to bootstrap all components.
@@ -24,26 +23,26 @@ import webRoutes from './routes/web';
  */
 dotenv.config();
 
-
 /**
  * Create a new application instance.
  */
 const app = express();
 app.disable('x-powered-by');
 
-
 /**
  * Logger
  */
 app.use(logger('dev', { skip: () => app.get('env') !== 'development' }));
 
-
 /**
  * View templating engine
  */
-nunjucks.configure('resources/views', { autoescape: true, express: app, watch: true });
+nunjucks.configure('resources/views', {
+  autoescape: true,
+  express: app,
+  watch: true,
+});
 app.set('view engine', 'html');
-
 
 /**
  * Body parser
@@ -52,12 +51,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '../public')));
 
-
 /**
  * Session
  */
 app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
-
 
 /**
  * Passport
@@ -65,38 +62,33 @@ app.use(session({ secret: 'secret', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
 /**
  * Routes
  */
 app.use('/api/v1/', apiRoutes);
 app.use('/', webRoutes);
 
-
 /**
  * Catch 404 and forward to error handler.
  */
-app.use((req, res, next) => {
+app.use((request, response, next) => {
   // todo check if accepts html and render error html page
   // else return json error message
 
-  const err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+  const error = new Error('Not Found');
+  error.status = 404;
+  next(error);
 });
-
 
 /**
  * Multipurpose error handler.
  */
-app.use((error, req, res, next) => { // eslint-disable-line no-unused-vars
-  // todo check if accepts html and render error html page
-  // else return json error message
-
-  if (!error.status) error = { status: 500, message: 'Whoops! Something went wrong.' }
+app.use((error, req, res) => {
+  if (!error.status) {
+    error = { status: 500, message: 'Whoops! Something went wrong.' }; // eslint-disable-line no-param-reassign
+  }
 
   res.status(error.status).render('error', { ...error });
 });
-
 
 export default app;

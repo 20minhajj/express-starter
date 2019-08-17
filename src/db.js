@@ -18,7 +18,13 @@ mongoose.connect(uri, options);
 
 const db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'Error connecting to the database.')); // eslint-disable-line no-console
-db.on('disconnected', console.error.bind(console, 'Failed connecting to the database.')); // eslint-disable-line no-console
+db.on(
+  'error',
+  console.error.bind(console, 'Error connecting to the database.'),
+); // eslint-disable-line no-console
+db.on(
+  'disconnected',
+  console.error.bind(console, 'Failed connecting to the database.'),
+); // eslint-disable-line no-console
 
 export default db;

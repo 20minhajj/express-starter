@@ -12,6 +12,6 @@ export async function registerUser(request, response, next) {
     await User.create(request.body);
     return response.redirect('/home');
   } catch (error) {
-    next({ status: 500, message: error.message, ...error });
+    return next({ status: 500, message: error.message, ...error });
   }
 }

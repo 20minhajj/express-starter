@@ -14,7 +14,8 @@ const localStrategy = new LocalStrategy(
       const user = await User.findOne({ email });
       if (!user) {
         return done(null, false);
-      } else if (!user.authenticateUser(password)) {
+      }
+      if (!user.authenticateUser(password)) {
         return done(null, false);
       }
 

@@ -1,0 +1,7 @@
+{
+  "extends": ["airbnb-base"],
+  "plugins": ["jest"],
+    "rules": {
+      "no-underscore-dangle": "off"
+    }
+}

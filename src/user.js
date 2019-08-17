@@ -38,7 +38,7 @@ UserSchema.plugin(uniqueValidator, {
   message: '{VALUE} already taken!',
 });
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
   if (this.isModified('password')) {
     this.password = this._hashPassword(this.password);
   }

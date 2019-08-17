@@ -1,15 +1,15 @@
-export async function welcome (request, response, next) {
+export async function welcome(request, response, next) {
   try {
     return response
       .status(200)
       .type('html')
       .render('welcome');
   } catch (error) {
-    next(error);
+    return next(error);
   }
 }
 
-export async function show (request, response) {
+export async function show(request, response) {
   try {
     const user = {
       id: '1234',
@@ -21,11 +21,7 @@ export async function show (request, response) {
       .status(200)
       .type('html')
       .render('home', user);
-  } catch(error) {
-    return response
-      .status(500)
-      .json(error);
+  } catch (error) {
+    return response.status(500).json(error);
   }
 }
-
-export default show;
