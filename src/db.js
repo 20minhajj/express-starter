@@ -15,6 +15,7 @@ const options = {
 };
 
 mongoose.connect(uri, options);
+console.log('foo', 'bar');
 
 const db = mongoose.connection;
 
@@ -22,6 +23,7 @@ db.on(
   'error',
   console.error.bind(console, 'Error connecting to the database.'),
 ); // eslint-disable-line no-console
+
 db.on(
   'disconnected',
   console.error.bind(console, 'Failed connecting to the database.'),
